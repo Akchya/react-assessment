@@ -48,6 +48,11 @@ class ToDoList extends React.Component {
     this.setState({ input: event.target.value });
   }
 
+  deleteItem(id) {
+    const updatedList = this.state.list.filter((item) => item.id !== id );
+    this.setState({list : updatedList});
+  }
+
   render() {
     return (
       <>
@@ -71,6 +76,7 @@ class ToDoList extends React.Component {
                 <th>ID</th>
                 <th>Created At</th>
                 <th>Text</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -79,9 +85,12 @@ class ToDoList extends React.Component {
                     <tr key={index}>
                       <td>{todo.id}</td>
                       <td>
-                        {todo.createdAt?.toLocaleTimeString("en-US", {hour: "numeric", minute: "numeric", hour12: true, })}
+                        {todo.createdAt?.toLocaleTimeString("en-US", {month: "short", day: "numeric", hour: "numeric", minute: "numeric", hour12: true, })}
                       </td>
                       <td>{todo.text}</td>
+                      <td>
+                        <button onClick={() => this.deleteItem(todo.id)}>Delete</button>
+                      </td>
                     </tr>
                   )
               )}
