@@ -22,7 +22,8 @@ class ToDoList extends React.Component {
   addToStart() {
     const date = new Date();
     const nextId = this.state.toDoCounter + 1;
-    const newList = [{ id: nextId, createdAt: date, text: this.state.input }, ...this.state.list, ];
+    const newList = [{ id: nextId, createdAt: date, text: this.state.input }, ...this.state.list,
+    ];
     this.setState({
       list: newList,
       toDoCounter: nextId,
@@ -33,7 +34,8 @@ class ToDoList extends React.Component {
   addToEnd() {
     const date = new Date();
     const nextId = this.state.toDoCounter + 1;
-    const newList = [...this.state.list, { id: nextId, createdAt: date, text: this.state.input },];
+    const newList = [...this.state.list, { id: nextId, createdAt: date, text: this.state.input },
+    ];
     this.setState({
       list: newList,
       toDoCounter: nextId,
@@ -48,38 +50,45 @@ class ToDoList extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="input-box">
-          <input
-            value={this.state.input}
-            onChange={(e) => this.handleInputChange(e)}
-          />
+      <>
+        <div className="container">
+          <div className="input-box">
+            <input
+              value={this.state.input}
+              onChange={(e) => this.handleInputChange(e)}
+            />
+          </div>
+          <div className="button-box">
+            <button onClick={() => this.addToStart()}>Add to Start</button>
+            <button onClick={() => this.addToEnd()}>Add to End</button>
+          </div>
         </div>
-        <div className="button-box">
-          <button onClick={() => this.addToStart()}>Add to Start</button>
-          <button onClick={() => this.addToEnd()}>Add to End</button>
+
+        <div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Created At</th>
+                <th>Text</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.list.map((todo, index) =>
+                  todo.text && (
+                    <tr key={index}>
+                      <td>{todo.id}</td>
+                      <td>
+                        {todo.createdAt?.toLocaleTimeString("en-US", {hour: "numeric", minute: "numeric", hour12: true, })}
+                      </td>
+                      <td>{todo.text}</td>
+                    </tr>
+                  )
+              )}
+            </tbody>
+          </table>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Created At</th>
-              <th>Text</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.list.map((todo, index) =>
-                todo.text && (
-                  <tr key={index}>
-                    <td>{todo.id}</td>
-                    <td>{todo.createdAt?.toLocaleTimeString("en-US", {hour: 'numeric', minute: 'numeric', hour12: true})}</td>
-                    <td>{todo.text}</td>
-                  </tr>
-                )
-            )}
-          </tbody>
-        </table>
-      </div>
+      </>
     );
   }
 }
