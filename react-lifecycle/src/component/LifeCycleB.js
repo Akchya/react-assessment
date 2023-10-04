@@ -19,7 +19,7 @@ export class LifeCycleB extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log("LifecycleB shouldComponentUpdate");
-    return false
+    return true
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
